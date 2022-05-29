@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+    <link rel="stylesheet" href="/admin/css/mem_list.css">
+
+    <script src="/admin/js/mem_list.js" defer></script>
+    <!-- 라우터에서 무조건 public 폴더로 보내게 설정 되어 있어서 public 생략 -->
+    <title>관리자 페이지</title>
+</head>
+<body>
+    <header>
+        <iframe src="/admin/header_nav.html" frameborder="0" width="100%"></iframe>
+    </header>
+    <main>
+        <table style="width: 100%;">
+<!-- 
+ID: 'COMENT_WRITER',
+PHONE: '010-7777-7777',
+EMAIL: 'COMENT_WRITER@gmail.com',
+NAME: '길동',
+ADDRESS: '고양시 덕양구 내유동',
+ADDRESS_DETAIL: 'zzz 빌라 101호',
+BIRTH: 1899-12-31T15:32:08.000Z -->
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>PHONE</th>
+                    <th>EMAIL</th>
+                    <th>NAME</th>
+                    <th>ADDRESS</th>
+                    <th>ADDRESS_DETAIL</th>
+                    <th>BIRTH</th>
+                    <th>정보</th>
+                </tr>
+            </thead>
+            <tbody id="memList">
+                <tr class="ex">
+                    <td class="ID"></td>
+                    <td class="PHONE"></td>
+                    <td class="EMAIL"></td>
+                    <td class="NAME"></td>
+                    <td class="ADDRESS"></td>
+                    <td class="ADDRESS_DETAIL"></td>
+                    <td class="BIRTH"></td>
+                    <td>
+                        <button class="update">수정</button>
+                        <button class="delete">삭제</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <hr>
+        <h2>회원 등록</h2>
+        <form action="/admin/mem/create/form" name="memCreateForm" class="memCreateForm" method="post">
+        <p>
+            <labal><b>아이디 : </b><input name="id" type="text" value="FFF"></labal>
+            <br><b>중복확인 : </b><strong id="idMsg"></strong>
+        </p>
+        <p>
+            <labal><b>핸드폰 : </b><input name="phone" type="text" value="010-0000-0000"></labal>
+            <br><b>중복확인 : <strong id="phoneMsg"></strong></b>
+        </p>
+        <p>
+            <labal><b>이메일 : </b><input name="email" type="email" value="1@m"></labal>
+            <br><b>중복확인 : <strong id="emailMsg"></strong></b>
+        </p>
+        <p><labal><b>이름 : </b><input name="name" type="text" value="민수"></labal></p>
+        <p><labal><b>주소 : </b><input name="address" type="text" value="서울"></labal></p>
+        <p><labal><b>상세주소 : </b><input name="address_detail" type="text" value="은평"></labal></p>
+        <p><labal><b>생년월일 : </b><input name="birth" type="text" value="1994-10-08"></labal></p>
+        <p><button id="submitBtn">등록</button></p>
+        </form>
+        <hr>
+        <form name="memUpdateForm" class="memUpdateForm">
+        <h2>회원 수정</h2>
+            <p><labal><b>아이디 : </b><input name="id" type="text" value="" disabled></labal></p>
+            <p><labal><b>핸드폰 : </b><input name="phone" type="text" value=""></labal></p>
+            <p><labal><b>이메일 : </b><input name="email" type="email" value=""></labal></p>
+            <p><labal><b>이름 : </b><input name="name" type="text" value=""></labal></p>
+            <p><labal><b>주소 : </b><input name="address" type="text" value=""></labal></p>
+            <p><labal><b>상세주소 : </b><input name="address_detail" type="text" value=""></labal></p>
+            <p><labal><b>생년월일 : </b><input name="birth" type="number" value=""></labal></p>
+            <p><button id="submitBtn">수정</button></p>
+        </form>
+    </main>
+<script>
+const memCreateForm = document.forms.memCreateForm;
+const memUpdateForm = document.forms.memUpdateForm;
+const idMsg = document.getElementById("idMsg");
+const phoneMsg = document.getElementById("phoneMsg");
+const emailMsg = document.getElementById("emailMsg");
+let insertCheck = false;
+
+memCreateForm.addEventListener("submit",(e)=>{
+    if(insertCheck === true){
+        alert("등록 성공 홈페이지 리셋");
+        location.href = "/admin/mem/list/:page";
+    };
+});
+memCreateForm.id.addEventListener("blur",(e)=>{ // id 중복체크
+    let id = e.target.value;
+    memReadId(id)
+    .then((res)=>{return res.json()})
+    .then((memId)=>{
+        let length = memId.length;
+        if(length == 0){
+            idMsg.innerHTML = ("사용 가능한 아이디");
+            idMsg.style.color = 'green';
+            insertCheck = true;
+        }else{
+            idMsg.innerHTML = ("사용 불가능한 아이디");
+            idMsg.style.color = 'red';
+            e.target.value = "";
+            insertCheck = false;
+        };
+    });
+});
+memCreateForm.phone.addEventListener("blur",(e)=>{ // phone 중복체크
+    let phone = e.target.value;
+    memReadPhone(phone)
+    .then((res)=>{return res.json()})
+    .then((memPhone)=>{
+        let length = memPhone.length;
+        if(length == 0){
+            phoneMsg.innerHTML = ("사용 가능한 폰번호");
+            phoneMsg.style.color = 'green';
+            insertCheck = true;
+        }else{
+            phoneMsg.innerHTML = ("중복된 폰번호");
+            phoneMsg.style.color = 'red';
+            e.target.value = "";
+            insertCheck = false;
+        };
+    });
+});
+memCreateForm.email.addEventListener("blur",(e)=>{ // email 중복체크
+    let email = e.target.value;
+    memReadEmail(email)
+    .then((res)=>{return res.json()})
+    .then((memEmail)=>{
+        let length = memEmail.length;
+        if(length == 0){
+            emailMsg.innerHTML = ("사용 가능한 이메일");
+            emailMsg.style.color = 'green';
+            insertCheck = true;
+        }else{
+            emailMsg.innerHTML = ("사용중인 이메일");
+            emailMsg.style.color = 'red';
+            e.target.value = "";
+            insertCheck = false;
+        };
+    });
+});
+function memReadId(id){
+    return fetch(`/admin/mem/readid/${id}`);
+}
+function memReadPhone(phone){
+    return fetch(`/admin/mem/readphone/${phone}`);
+}
+function memReadEmail(email){
+    return fetch(`/admin/mem/reademail/${email}`);
+}
+function memDelete(id){ // 삭제 Control
+    return fetch(`/admin/mem/delete/${id}`,{method:"DELETE"})
+    .then((res)=>{return res.json()})
+    .then((msg)=>{
+        alert(msg["msg"]);
+        location.href="/admin/mem/list/:page";
+    });
+};
+
+
+
+// function memUpdateCont(id){
+//     memUpdateRead(id)
+//     .then((res)=>{return res.json()})
+//     .then((memlist)=>{
+//         if(memlist.length>0){
+//             const mem = memList[0];
+//             memUpdateForm.id.value = mem.ID;
+//             memUpdateForm.phone.value = mem.PHONE;
+//             memUpdateForm.email.value = mem.EMAIL;
+//             memUpdateForm.name.value = mem.NAME;
+//             memUpdateForm.address.value = mem.ADDRESS;
+//             memUpdateForm.address_detail.value = mem.ADDRESS_DETAIL;
+//             memUpdateForm.birth.value = mem.BIRTH;
+//         };
+//     });
+// };
+
+// function memUpdateRead(id){
+//     return fetch("/admin/mem/read/:id/form");
+// };
+
+</script>
+</body>
+</html>

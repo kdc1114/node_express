@@ -1,0 +1,14 @@
+body{
+    background-color: rgb(214, 232, 226);
+    margin: 0;
+    padding: .1;
+}
+.ex{
+    display: none;
+}
+table{
+    border: 1px solid gray;
+}
+table th,td{
+    border: 1px solid gray;
+}

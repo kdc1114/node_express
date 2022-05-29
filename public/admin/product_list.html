@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/admin/css/product_list.css">
+    <script src="/admin/js/product_list.js" defer></script>
+    <!-- defer : document가 모두 로드되었을때 리소스를 다운받고 실행 
+                onload 할필요가없어진다-->
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <iframe src="/admin/header_nav.html" width="100%" frameborder="0"></iframe>
+    </header>
+    <main>
+        <h2>상품 리스트 출력하세요!</h2>
+        <table>
+<!-- 
+PRODUCT_NUM: 23,
+NAME: '컨버스',
+TITLE: '컨버스 척 70 클래식',
+COUNT: 100,
+PRICE: 58800,
+COLOR: '엘로우',
+MAIN_IMG: '162058C.jpg',
+DETAIL_IMG: '162058C_detail.jpg',
+MODEL_NUM: '162058C',
+MEMBER_ID: 'BBB',
+CATEGORY_NUM: 19 -->
+            <thead>
+                <tr>
+                    <th>CATEGORY_NUM</th>
+                    <th>COLOR</th>
+                    <th>COUNT</th>
+                    <th>DETAIL_IMG</th>
+                    <th>MAIN_IMG</th>
+                    <th>MEMBER_ID</th>
+                    <th>MODEL_NUM</th>
+                    <th>NAME</th>
+                    <th>PRICE</th>
+                    <th>PRODUCT_NUM</th>
+                    <th>TITLE</th>
+                </tr>
+            </thead>
+            <tbody id="productList">
+                <tr class="ex">
+                    <td class="CATEGORY_NUM"></td>
+                    <td class="COLOR"></td>
+                    <td class="COUNT"></td>
+                    <td>
+                        <img class="DETAIL_IMG" width="50px" height="50px" src="" alt="">
+                    </td>
+                    <td>
+                        <img class="MAIN_IMG" height="50px" src="" alt="">
+                    </td>
+                    <td class="MEMBER_ID"></td>
+                    <td class="MODEL_NUM"></td>
+                    <td class="NAME"></td>
+                    <td class="PRICE"></td>
+                    <td class="PRODUCT_NUM"></td>
+                    <td class="TITLE"></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

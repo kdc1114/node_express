@@ -1,0 +1,15 @@
+body{
+    margin: 0;
+    padding: .1;
+    background-color: cornsilk;
+}
+.ex{
+    display: none;
+}
+table{
+    border: 1px solid gray;
+}
+table th,td{
+    border: 1px solid gray;
+    text-align: center;
+}

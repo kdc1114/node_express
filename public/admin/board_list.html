@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/admin/css/board_list.css">
+    <script src="/admin/js/board_list.js" defer></script>
+    <!-- defer : document가 모두 로드되었을때 리소스를 다운받고 실행 
+                onload 할필요가없어진다-->
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <iframe src="/admin/header_nav.html" width="100%" frameborder="0"></iframe>
+    </header>
+    <main>
+        <h2>보드 리스트 출력하세요!</h2>
+        <table>
+<!-- 
+NUM: 15,
+MEMBER_ID: 'BBB',
+TITLE: '16번번째글이다 와~!',
+CONTENTS: '반갑습니다. 여러분~~!!',
+REGIST_TIME: 2022-03-25T00:34:17.000Z -->
+            <thead>
+                <tr>
+                    <th>NUM</th>
+                    <th>MEMBER_ID</th>
+                    <th>TITLE</th>
+                    <th>CONTENTS</th>
+                    <th>REGIST_TIME</th>
+                </tr>
+            </thead>
+            <tbody id="boardList">
+                <tr class="ex">
+                    <td class="NUM"></td>
+                    <td class="MEMBER_ID"></td>
+                    <td class="TITLE"></td>
+                    <td class="CONTENTS"></td>
+                    <td class="REGIST_TIME"></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
